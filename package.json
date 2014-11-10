@@ -1,0 +1,11 @@
+{
+    "name": "citiesdb",
+    "version": "0.0.1",
+    "description": "creates a City collecion and populates it with brazilian cities and their respective IBGE code",
+    "dependencies": {
+        "buffered-reader": "^1.0.1",
+        "underscore": "^1.7.0",
+        "mongoose": "^3.8.18",
+        "join": "^2.3.2"
+    }
+}
