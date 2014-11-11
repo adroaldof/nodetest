@@ -104,5 +104,5 @@ var readLines = function (input, callback) {
     });
 };
 
-var input = fs.createReadStream(filePath, {encoding: 'utf16le'});
+var input = fs.createReadStream(filePath);
 readLines(input, generateJson);
