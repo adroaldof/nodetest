@@ -43,8 +43,8 @@ var pushToMongo = function (data) {
 
     mongoose.connect('mongodb://localhost/City');
 
-    _.each(Object.keys(data), function (state) {
-        City.saveToMongo({_id:state, cities:data[state]}, join.add());
+    _.each(data, function (state) {
+        City.saveToMongo({_id:state._id, cities:state.cities, name:state.name}, join.add());
     });
 
     join.when(function () {
@@ -55,9 +55,10 @@ var pushToMongo = function (data) {
 var generateJson = function (data) {
     var line = data.split('\t'),
         state = line[1],
-        stateAbbrev = states[state].abbreviation;
+        abbr = states[state].abbreviation;
 
-    citiesJSON[stateAbbrev] = citiesJSON[stateAbbrev] ? citiesJSON[stateAbbrev] : [];
+    citiesJSON[abbr] = citiesJSON[abbr] ? citiesJSON[abbr] : {};
+    citiesJSON[abbr]['cities'] = citiesJSON[abbr]['cities'] ? citiesJSON[abbr]['cities'] : [];
 
     var city = {
         '_id': String(line[0]) + String(line[2]),
@@ -65,9 +66,17 @@ var generateJson = function (data) {
     };
 
     if (_.isNumber(parseInt(line[0]))) {
-        if (!_.findWhere(citiesJSON[stateAbbrev], city)) {
-            citiesJSON[stateAbbrev].push(city);
+        if (!_.findWhere(citiesJSON[abbr], city)) {
+            citiesJSON[abbr]['cities'].push(city);
         }
+    }
+
+    if (!_.findWhere(citiesJSON[abbr]['name'] === state)) {
+        citiesJSON[abbr]['name'] = state;
+    }
+
+    if (!_.findWhere(citiesJSON[abbr]['_id'] === abbr)) {
+        citiesJSON[abbr]['_id'] = abbr;
     }
 };
 

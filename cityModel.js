@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
     CitySchema = new Schema({
         _id: String,
-        cities: [{name: String, _id: String}]
+        cities: [{name: String, _id: String}],
+        name: String
     });
 
 
